@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('number_of_years')->nullable();
-            $table->foreignId('faculty_id')->constrained('faculties')->cascadeOnDelete();
+            $table->foreignId('faculty_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

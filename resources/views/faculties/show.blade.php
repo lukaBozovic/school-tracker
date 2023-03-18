@@ -6,41 +6,19 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Faculties
+            Faculties show
         </h2>
     </x-slot>
 
     <div class="container mt-5">
-        <table class="table">
-            <thead>
-            <th>ID</th>
-            <th>Name</th>
-            <th>City</th>
-            <th>Country</th>
-            <th>Actions</th>
-            </thead>
-            <tbody>
-            @foreach($faculties as $faculty)
-                <tr>
-                    <td>
-                        {{$faculty->id}}
-                    </td>
-                    <td>
-                        {{$faculty->name}}
-                    </td>
-                    <td>
-                        {{$faculty->city}}
-                    </td>
-                    <td>
-                        {{$faculty->country}}
-                    </td>
-                    <td>
-                        <a href="{{route('faculties.show', $faculty->id)}}" class="btn btn-primary">Show</a>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{$faculty->name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{$faculty->city}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{{$faculty->country}}</h6>
+                <p class="card-text">{{$faculty->description}}</p>
+            </div>
+        </div>
     </div>
 
 

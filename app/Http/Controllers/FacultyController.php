@@ -20,7 +20,7 @@ class FacultyController extends Controller
      */
     public function create()
     {
-        //
+        return view('faculties.create');
     }
 
     /**
@@ -28,15 +28,23 @@ class FacultyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Faculty::query()->create([
+            'id' => 57,
+            'name' => $request->name,
+            'city' => $request->city,
+            'country' => $request->country,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('faculties.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Faculty $faculty)
     {
-        //
+        return view('faculties.show', ['faculty' => $faculty]);
     }
 
     /**

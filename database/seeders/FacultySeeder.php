@@ -12,15 +12,6 @@ class FacultySeeder extends Seeder
      */
     public function run(): void
     {
-
-        for($i = 0; $i < 10; $i++){
-            Faculty::query()->create([
-                'name' => fake()->name,
-                'city' => fake()->city,
-                'country' => fake()->country,
-                'description' => fake()->text(30)
-            ]);
-        }
-
+        Faculty::factory(10)->create();
     }
 }

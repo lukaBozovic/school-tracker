@@ -30,7 +30,10 @@ Route::middleware('auth')->group(function () {
 
 
     //Faculty routes
-    Route::get('/faculties', [FacultyController::class, 'index']);
+    Route::get('/faculties', [FacultyController::class, 'index'])->name('faculties.index');
+    Route::get('/faculties/create', [FacultyController::class, 'create'])->name('faculties.create');
+    Route::get('/faculties/{faculty}', [FacultyController::class, 'show'])->name('faculties.show');
+    Route::post('/faculties', [FacultyController::class, 'store'])->name('faculties.store');
 });
 
 require __DIR__.'/auth.php';

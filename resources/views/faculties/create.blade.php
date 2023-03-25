@@ -18,6 +18,7 @@
     </x-slot>
 
     <div class="container mt-5">
+        <a class="btn btn-dark mb-5" href="{{ url()->previous() }}">Back</a>
         <form method="post" action="{{route('faculties.store')}}">
             @csrf
             <div class="mb-3">

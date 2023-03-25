@@ -11,6 +11,7 @@
     </x-slot>
 
     <div class="container mt-5">
+        <a class="btn btn-success mb-5" href="{{ route('faculties.create') }}" >Add new faculty</a>
         <table class="table">
             <thead>
             <th>ID</th>
@@ -35,12 +36,26 @@
                         {{$faculty->country}}
                     </td>
                     <td>
-                        <a href="{{route('faculties.show', $faculty->id)}}" class="btn btn-primary">Show</a>
+                        <div class="row">
+                            <a href="{{route('faculties.show', $faculty->id)}}" class="btn btn-primary col-6">Show</a>
+
+                            <form class="col-6" action="{{route('faculties.destroy', $faculty->id)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="currentPage" value="{{ $faculties->currentPage()}}">
+                                <input type="hidden" name="total" value="{{ $faculties->total()}}">
+                                <input type="hidden" name="perPage" value="{{ $faculties->perPage()}}">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
+        <div>
+            {{ $faculties->links() }}
+        </div>
     </div>
 
 

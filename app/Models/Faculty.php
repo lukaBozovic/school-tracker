@@ -10,4 +10,5 @@ class Faculty extends Model
     use HasFactory;
     //protected $fillable = ['name', 'city', 'country', 'description'];
     protected $guarded = ['id'];
+    //protected $perPage = 5;
 }

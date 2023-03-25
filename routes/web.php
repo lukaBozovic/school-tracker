@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/faculties', [FacultyController::class, 'index'])->name('faculties.index');
     Route::get('/faculties/create', [FacultyController::class, 'create'])->name('faculties.create');
     Route::get('/faculties/{faculty}', [FacultyController::class, 'show'])->name('faculties.show');
+    Route::delete('/faculties/{faculty}', [FacultyController::class, 'destroy'])->name('faculties.destroy');
     Route::post('/faculties', [FacultyController::class, 'store'])->name('faculties.store');
 });
 

@@ -12,7 +12,8 @@ class FacultyController extends Controller
      */
     public function index()
     {
-        return view('faculties.index', ['faculties' => Faculty::all()]);
+        $paginatedFaculties = Faculty::query()->paginate(4);
+        return view('faculties.index', ['faculties' => $paginatedFaculties]);
     }
 
     /**
@@ -66,8 +67,25 @@ class FacultyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Faculty $faculty, Request $request)
     {
-        //
+        $redirectPage = $this->calculateRedirectPage($request->perPage, $request->total, $request->currentPage);
+        $faculty->delete();
+        return redirect()->route('faculties.index', ['page' => $redirectPage]);
+    }
+
+    //function to calculate redirect page after deleting a faculty
+    //this is necessary because the pagination is not working properly
+    //when deleting a faculty from the last page
+    private function calculateRedirectPage($perPage, $total, $currentPage)
+    {
+        if ($total < $perPage)
+            return 1;
+
+        $numberOfElementsCurrentPage = $total - ($currentPage - 1) * $perPage;
+        if ($numberOfElementsCurrentPage == 1)
+            return $currentPage - 1;
+
+        return $currentPage;
     }
 }

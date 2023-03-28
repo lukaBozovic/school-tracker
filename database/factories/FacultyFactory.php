@@ -21,7 +21,8 @@ class FacultyFactory extends Factory
             'name' => fake()->name,
             'city' => fake()->city,
             'country' => fake()->country,
-            'description' => fake()->text(30)
+            'description' => fake()->text(30),
+            'year_of_foundation' => fake()->year,
         ];
     }
 }

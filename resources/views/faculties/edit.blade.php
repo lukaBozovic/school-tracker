@@ -13,51 +13,52 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Faculties create
+            Faculties edit
         </h2>
     </x-slot>
 
     <div class="container mt-5">
         <a class="btn btn-dark mb-5" href="{{ url()->previous() }}">Back</a>
-        <form method="post" action="{{route('faculties.store')}}">
+        <form method="post" action="{{route('faculties.update', $faculty->id)}}">
             @csrf
+            @method('PUT')
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" aria-describedby="emailHelp">
+                <input type="text" name="name" value="{{$faculty->name}}" class="form-control" aria-describedby="emailHelp">
                 @error('name')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
                 <label class="form-label">City</label>
-                <input type="text" name="city" class="form-control">
+                <input type="text" name="city" value="{{$faculty->city}}" class="form-control">
                 @error('city')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Country</label>
-                <input type="text" name="country" class="form-control">
+                <input type="text" name="country" value="{{$faculty->country}}" class="form-control">
                 @error('country')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Description</label>
-                <input type="text" name="description" class="form-control">
+                <input type="text" name="description" value="{{$faculty->description}}" class="form-control">
                 @error('description')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Year of foundation</label>
-                <input type="number" name="year_of_foundation" class="form-control">
+                <input type="number" name="year_of_foundation" value="{{$faculty->year_of_foundation}}" class="form-control">
                 @error('year_of_foundation')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
 

@@ -37,9 +37,9 @@
                     </td>
                     <td>
                         <div class="row">
-                            <a href="{{route('faculties.show', $faculty->id)}}" class="btn btn-primary col-6">Show</a>
+                            <a href="{{route('faculties.show', $faculty->id)}}" class="btn btn-primary col-4">Show</a>
 
-                            <form class="col-6" action="{{route('faculties.destroy', $faculty->id)}}" method="POST">
+                            <form class="col-4" action="{{route('faculties.destroy', $faculty->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="currentPage" value="{{ $faculties->currentPage()}}">
@@ -47,6 +47,7 @@
                                 <input type="hidden" name="perPage" value="{{ $faculties->perPage()}}">
                                 <button class="btn btn-danger">Delete</button>
                             </form>
+                            <a href="{{route('faculties.edit', $faculty->id)}}" class="btn btn-warning col-4">Edit</a>
                         </div>
                     </td>
                 </tr>

@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/faculties/{faculty}', [FacultyController::class, 'show'])->name('faculties.show');
     Route::delete('/faculties/{faculty}', [FacultyController::class, 'destroy'])->name('faculties.destroy');
     Route::post('/faculties', [FacultyController::class, 'store'])->name('faculties.store');
+    Route::get('/faculties/{faculty}/edit', [FacultyController::class, 'edit'])->name('faculties.edit');
+    Route::put('/faculties/{faculty}', [FacultyController::class, 'update'])->name('faculties.update');
 });
 
 require __DIR__.'/auth.php';

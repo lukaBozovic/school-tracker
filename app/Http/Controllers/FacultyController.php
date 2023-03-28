@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFacultyRequest;
+use App\Http\Requests\UpdateFacultyRequest;
 use App\Models\Faculty;
 use Illuminate\Http\Request;
 
@@ -27,16 +29,9 @@ class FacultyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFacultyRequest $request)
     {
-        Faculty::query()->create([
-            'id' => 57,
-            'name' => $request->name,
-            'city' => $request->city,
-            'country' => $request->country,
-            'description' => $request->description,
-        ]);
-
+        Faculty::query()->create($request->validated());
         return redirect()->route('faculties.index');
     }
 
@@ -51,17 +46,27 @@ class FacultyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Faculty $faculty)
     {
-        //
+        return view('faculties.edit', ['faculty' => $faculty]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateFacultyRequest $request, Faculty $faculty)
     {
-        //
+        Faculty::query()
+            ->where('id', $faculty->id)->update($request->validated());
+
+        /* alternative way to update a faculty
+        $faculty->name = $request->name;
+        $faculty->city = $request->city;
+        $faculty->country = $request->country;
+        $faculty->description = $request->description;
+        $faculty->save();
+        */
+        return redirect()->route('faculties.index');
     }
 
     /**

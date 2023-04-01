@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('number_of_years')->nullable();
-            $table->foreignId('faculty_id')->constrained()->cascadeOnDelete();
+            $table->text('description')->nullable();
+            $table->integer('ects');
+            $table->integer('number_of_years');
+            $table->foreignId('faculty_id')->constrained();
+            $table->foreignId('program_type_id')->constrained();
             $table->timestamps();
         });
     }

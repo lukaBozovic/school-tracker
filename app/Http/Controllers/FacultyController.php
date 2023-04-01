@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFacultyRequest;
 use App\Http\Requests\UpdateFacultyRequest;
 use App\Models\Faculty;
+use App\Models\ProgramType;
 use Illuminate\Http\Request;
 
 class FacultyController extends Controller
@@ -40,7 +41,8 @@ class FacultyController extends Controller
      */
     public function show(Faculty $faculty)
     {
-        return view('faculties.show', ['faculty' => $faculty]);
+        $programTypes = ProgramType::all();
+        return view('faculties.show', ['faculty' => $faculty, 'program_types' => $programTypes]);
     }
 
     /**

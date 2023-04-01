@@ -30,13 +30,16 @@ Route::middleware('auth')->group(function () {
 
 
     //Faculty routes
-    Route::get('/faculties', [FacultyController::class, 'index'])->name('faculties.index');
+    /*Route::get('/faculties', [FacultyController::class, 'index'])->name('faculties.index');
     Route::get('/faculties/create', [FacultyController::class, 'create'])->name('faculties.create');
     Route::get('/faculties/{faculty}', [FacultyController::class, 'show'])->name('faculties.show');
     Route::delete('/faculties/{faculty}', [FacultyController::class, 'destroy'])->name('faculties.destroy');
     Route::post('/faculties', [FacultyController::class, 'store'])->name('faculties.store');
     Route::get('/faculties/{faculty}/edit', [FacultyController::class, 'edit'])->name('faculties.edit');
-    Route::put('/faculties/{faculty}', [FacultyController::class, 'update'])->name('faculties.update');
+    Route::put('/faculties/{faculty}', [FacultyController::class, 'update'])->name('faculties.update');*/
+    //This two things are the same
+
+    Route::resource('faculties', FacultyController::class);
 });
 
 require __DIR__.'/auth.php';

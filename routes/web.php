@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProgramController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,8 @@ Route::middleware('auth')->group(function () {
     //This two things are the same
 
     Route::resource('faculties', FacultyController::class);
+    Route::resource('programs', ProgramController::class)->except(['create']);
+    Route::get('/faculties/{faculty}/programs', [ProgramController::class, 'create'])->name('programs.create');
 });
 
 require __DIR__.'/auth.php';

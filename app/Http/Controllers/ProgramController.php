@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faculty;
 use App\Models\Program;
 use App\Http\Requests\StoreProgramRequest;
 use App\Http\Requests\UpdateProgramRequest;
+use App\Models\ProgramType;
 
 class ProgramController extends Controller
 {
@@ -19,9 +21,10 @@ class ProgramController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Faculty $faculty)
     {
-        //
+        $programTypes = ProgramType::all();
+        return view('programs.create', ['faculty_id' => $faculty->id, 'program_types' => $programTypes]);
     }
 
     /**
@@ -29,7 +32,9 @@ class ProgramController extends Controller
      */
     public function store(StoreProgramRequest $request)
     {
-        //
+        $faculty = Faculty::query()->find($request->faculty_id);
+        Program::query()->create($request->validated());
+        return redirect()->route('faculties.show', ['faculty' => $faculty]);
     }
 
     /**
@@ -37,7 +42,7 @@ class ProgramController extends Controller
      */
     public function show(Program $program)
     {
-        //
+        return view('programs.show', ['program' => $program]);
     }
 
     /**

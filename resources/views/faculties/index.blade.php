@@ -36,7 +36,7 @@
                         {{$faculty->country}}
                     </td>
                     <td>
-                        <div class="row">
+                        <div class="row text-center">
                             <a href="{{route('faculties.show', $faculty->id)}}" class="btn btn-primary col-4">Show</a>
 
                             <form class="col-4" action="{{route('faculties.destroy', $faculty->id)}}" method="POST">

@@ -14,4 +14,9 @@ class Program extends Model
     {
         return $this->belongsTo(Faculty::class);
     }
+
+    public function programType()
+    {
+        return $this->belongsTo(ProgramType::class);
+    }
 }

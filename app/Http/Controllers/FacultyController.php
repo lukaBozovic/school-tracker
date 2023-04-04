@@ -39,9 +39,14 @@ class FacultyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Faculty $faculty)
+    public function show(Faculty $faculty, Request $request)
     {
+        $programTypeId = $request->program_type_id;
         $programTypes = ProgramType::all();
+        $faculty->load(['programs' => function ($query) use ($programTypeId) {
+            if ($programTypeId !== null)
+                $query->where('program_type_id', $programTypeId);
+        }]);
         return view('faculties.show', ['faculty' => $faculty, 'program_types' => $programTypes]);
     }
 

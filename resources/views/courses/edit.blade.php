@@ -13,7 +13,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Faculties edit
+            Course edit
         </h2>
     </x-slot>
 
@@ -23,49 +23,41 @@
                 <path d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V8.753l6.267 3.636c.54.313 1.233-.066 1.233-.697v-2.94l6.267 3.636c.54.314 1.233-.065 1.233-.696V4.308c0-.63-.693-1.01-1.233-.696L8.5 7.248v-2.94c0-.63-.692-1.01-1.233-.696L1 7.248V4a.5.5 0 0 0-.5-.5z"/>
             </svg>
         </a>
-        <form method="post" action="{{route('faculties.update', $faculty->id)}}">
+        <form method="post" action="{{route('courses.update', $course->id)}}">
             @csrf
             @method('PUT')
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Name</label>
-                <input type="text" name="name" value="{{$faculty->name}}" class="form-control" aria-describedby="emailHelp">
+                <input type="text" name="name" value="{{$course->name}}" class="form-control" aria-describedby="emailHelp">
                 @error('name')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label class="form-label">City</label>
-                <input type="text" name="city" value="{{$faculty->city}}" class="form-control">
-                @error('city')
+                <label class="form-label">ECTS</label>
+                <input type="number" name="ects" value="{{$course->ects}}" class="form-control">
+                @error('ects')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Country</label>
-                <input type="text" name="country" value="{{$faculty->country}}" class="form-control">
-                @error('country')
+                <label class="form-label">Semester</label>
+                <input type="number" name="semester" value="{{$course->semester}}" class="form-control">
+                @error('semester')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Description</label>
-                <input type="text" name="description" value="{{$faculty->description}}" class="form-control">
+                <input type="text" name="description" value="{{$course->description}}" class="form-control">
                 @error('description')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Year of foundation</label>
-                <input type="number" name="year_of_foundation" value="{{$faculty->year_of_foundation}}" class="form-control">
-                @error('year_of_foundation')
-                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                @enderror
-            </div>
-
+            <input type="hidden" name="program_id" value="{{$course->program_id}}">
 
             <button type="submit" class="btn btn-success">Submit</button>
         </form>

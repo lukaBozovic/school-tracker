@@ -42,7 +42,7 @@ class ProgramController extends Controller
      */
     public function show(Program $program)
     {
-        return view('programs.show', ['program' => $program]);
+        return view('programs.show', ['program' => $program->load(['programType', 'courses'])]);
     }
 
     /**

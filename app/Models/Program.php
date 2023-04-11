@@ -19,4 +19,9 @@ class Program extends Model
     {
         return $this->belongsTo(ProgramType::class);
     }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
 }

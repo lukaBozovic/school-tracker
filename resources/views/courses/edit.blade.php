@@ -18,7 +18,7 @@
     </x-slot>
 
     <div class="container mt-5">
-        <a class="btn btn-dark mb-5" href="{{ url()->previous() }}">
+        <a class="btn btn-dark mb-5" href="{{ route('programs.show', $course->program_id) }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-backward-fill" viewBox="0 0 16 16">
                 <path d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V8.753l6.267 3.636c.54.313 1.233-.066 1.233-.697v-2.94l6.267 3.636c.54.314 1.233-.065 1.233-.696V4.308c0-.63-.693-1.01-1.233-.696L8.5 7.248v-2.94c0-.63-.692-1.01-1.233-.696L1 7.248V4a.5.5 0 0 0-.5-.5z"/>
             </svg>
@@ -28,7 +28,7 @@
             @method('PUT')
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Name</label>
-                <input type="text" name="name" value="{{$course->name}}" class="form-control" aria-describedby="emailHelp">
+                <input type="text" name="name" value="{{old('name', $course->name)}}" class="form-control" aria-describedby="emailHelp">
                 @error('name')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
@@ -36,7 +36,7 @@
 
             <div class="mb-3">
                 <label class="form-label">ECTS</label>
-                <input type="number" name="ects" value="{{$course->ects}}" class="form-control">
+                <input type="number" name="ects" value="{{old('ects', $course->ects)}}" class="form-control">
                 @error('ects')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
@@ -44,7 +44,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Semester</label>
-                <input type="number" name="semester" value="{{$course->semester}}" class="form-control">
+                <input type="number" name="semester" value="{{old('semester', $course->semester)}}" class="form-control">
                 @error('semester')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
@@ -52,7 +52,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Description</label>
-                <input type="text" name="description" value="{{$course->description}}" class="form-control">
+                <input type="text" name="description" value="{{old('description', $course->description)}}" class="form-control">
                 @error('description')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror

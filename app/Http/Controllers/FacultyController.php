@@ -15,6 +15,13 @@ class FacultyController extends Controller
      */
     public function index()
     {
+        /*
+        if (!auth()->user()->is_admin){
+            return redirect()->route('dashboard');
+        }
+        */
+         //this is not good practice because we need to duplicate this code in every method
+
         $paginatedFaculties = Faculty::query()->paginate(4);
         return view('faculties.index', ['faculties' => $paginatedFaculties]);
     }

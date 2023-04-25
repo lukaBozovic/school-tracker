@@ -4,6 +4,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,12 +41,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/faculties/{faculty}/edit', [FacultyController::class, 'edit'])->name('faculties.edit');
     Route::put('/faculties/{faculty}', [FacultyController::class, 'update'])->name('faculties.update');*/
     //This two things are the same
+    Route::get('students/create', [StudentController::class, 'create'])->name('students.create');
+    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
 
-    Route::resource('faculties', FacultyController::class);
-    Route::resource('programs', ProgramController::class)->except(['create']);
-    Route::get('/faculties/{faculty}/programs', [ProgramController::class, 'create'])->name('programs.create');
-    Route::resource('courses', CourseController::class)->except(['create']);
-    Route::get('/programs/{program}/courses', [CourseController::class, 'create'])->name('courses.create');
+    Route::middleware('is_admin')->group(function () {
+        Route::resource('faculties', FacultyController::class);
+        Route::resource('programs', ProgramController::class)->except(['create']);
+        Route::get('/faculties/{faculty}/programs', [ProgramController::class, 'create'])->name('programs.create');
+        Route::resource('courses', CourseController::class)->except(['create']);
+        Route::get('/programs/{program}/courses', [CourseController::class, 'create'])->name('courses.create');
+    });
+
+
+
+
+
+
 });
 
 require __DIR__.'/auth.php';

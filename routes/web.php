@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\StudentController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,31 +26,27 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'student-data'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
-    //Faculty routes
-    /*Route::get('/faculties', [FacultyController::class, 'index'])->name('faculties.index');
-    Route::get('/faculties/create', [FacultyController::class, 'create'])->name('faculties.create');
-    Route::get('/faculties/{faculty}', [FacultyController::class, 'show'])->name('faculties.show');
-    Route::delete('/faculties/{faculty}', [FacultyController::class, 'destroy'])->name('faculties.destroy');
-    Route::post('/faculties', [FacultyController::class, 'store'])->name('faculties.store');
-    Route::get('/faculties/{faculty}/edit', [FacultyController::class, 'edit'])->name('faculties.edit');
-    Route::put('/faculties/{faculty}', [FacultyController::class, 'update'])->name('faculties.update');*/
-    //This two things are the same
     Route::get('students/create', [StudentController::class, 'create'])->name('students.create');
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+    Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/courses/{course}/students/{student}/documents', [DocumentController::class, 'getStudentDocumentsForCourse'])->name('student-documents.index');
+    Route::post('documents', [DocumentController::class, 'storeStudentDocument'])->name('student-documents.store');
+    Route::middleware('student-data')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+
 
     Route::middleware('is_admin')->group(function () {
         Route::resource('faculties', FacultyController::class);
         Route::resource('programs', ProgramController::class)->except(['create']);
         Route::get('/faculties/{faculty}/programs', [ProgramController::class, 'create'])->name('programs.create');
-        Route::resource('courses', CourseController::class)->except(['create']);
+        Route::resource('courses', CourseController::class)->except(['create', 'index']);
         Route::get('/programs/{program}/courses', [CourseController::class, 'create'])->name('courses.create');
     });
 

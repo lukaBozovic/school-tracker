@@ -4,20 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Student extends Model
+class Document extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
-    public function program()
+    public function documentable(): MorphTo
     {
-        return $this->belongsTo(Program::class);
+        return $this->morphTo();
     }
-
 }

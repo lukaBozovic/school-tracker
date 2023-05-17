@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
+use App\Mail\EnteringMail;
 use App\Models\Faculty;
 use App\Models\Program;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class StudentController extends Controller
 {
 
     public function create(Request $request)
     {
-        $this->checkStudentExisting();
+        if ($this->checkStudentExisting())
+            return redirect()->route('dashboard');
 
         if ($request->faculty_id)
             $currentPrograms = Program::query()->where('faculty_id', $request->faculty_id)->get();
@@ -30,11 +33,13 @@ class StudentController extends Controller
         Student::query()->create(
             $request->validated()
         );
+        Mail::to(auth()->user())->send(new EnteringMail());
         return redirect()->route('dashboard');
     }
 
     private function checkStudentExisting(){
         if(auth()->user()->student != null)
-            return redirect()->route('dashboard');
+           return true;
+        return false;
     }
 }

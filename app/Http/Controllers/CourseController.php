@@ -15,7 +15,10 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = auth()->user()->student->program->courses()
+            ->orderBy('semester')
+            ->get();
+        return view('courses.index', ['courses' => $courses]);
     }
 
     /**

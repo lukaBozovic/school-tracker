@@ -14,4 +14,13 @@ class CourseStudent extends Model
     protected $with = ['documents'];
     protected $table = 'course_student';
     protected $guarded =['id'];
+
+    public function exams(){
+        return $this->hasMany(Exam::class);
+    }
+
+    public function getTotalPointsAttribute()
+    {
+        return number_format($this->exams()->sum('points'), 2);
+    }
 }

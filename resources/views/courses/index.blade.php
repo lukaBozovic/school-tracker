@@ -33,6 +33,7 @@
             <th>Name</th>
             <th>ECTS</th>
             <th>Semester</th>
+            <th>Total points</th>
             <th>Actions</th>
             </thead>
             <tbody>
@@ -48,10 +49,13 @@
                         {{$courses->semester}}
                     </td>
                     <td>
+                        {{$courses->courseStudents->first()?->totalPoints ?? number_format(0, 2)}}
+                    </td>
+                    <td>
 {{--                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">--}}
 {{--                            Launch demo modal--}}
 {{--                        </button>--}}
-                        <a href="{{route('student-documents.index', [$courses->id, auth()->user()->student->id])}}" class="btn btn-primary">Show documents</a>
+                        <a href="{{route('student-course', [$courses->id, auth()->user()->student->id])}}" class="btn btn-primary">Show</a>
                     </td>
                 </tr>
             @endforeach

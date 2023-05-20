@@ -12,17 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
-    public function getStudentDocumentsForCourse(Course $course, Student $student){
-        $courseStudentRelation = CourseStudent::query()->where('course_id', $course->id)
-            ->where('student_id', $student->id)->first();
-
-        return view('documents.index', [
-            'course' => $course,
-            'student' => $student,
-            'documents' => $courseStudentRelation?->documents
-        ]);
-    }
-
     public function storeStudentDocument(StoreStudentDocumentRequest $request){
 
         $courseStudentRelation = CourseStudent::query()

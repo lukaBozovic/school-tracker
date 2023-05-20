@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
@@ -33,8 +34,10 @@ Route::middleware('auth')->group(function () {
     Route::get('students/create', [StudentController::class, 'create'])->name('students.create');
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
     Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
-    Route::get('/courses/{course}/students/{student}/documents', [DocumentController::class, 'getStudentDocumentsForCourse'])->name('student-documents.index');
+    Route::get('/courses/{course}/students/{student}', [StudentController::class, 'getStudentCoursePage'])->name('student-course');
     Route::post('documents', [DocumentController::class, 'storeStudentDocument'])->name('student-documents.store');
+    Route::post('exams', [ExamController::class, 'store'])->name('exams.store');
+
     Route::middleware('student-data')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

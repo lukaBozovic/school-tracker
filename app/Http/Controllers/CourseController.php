@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
+use App\Models\CourseStudent;
 use App\Models\Program;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,18 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
+    //this function is only used by student
     public function index()
     {
-        $courses = auth()->user()->student->program->courses()
+        $authStudent = auth()->user()->student;
+
+        $courses = $authStudent->program->courses()
+            ->with('courseStudents', function ($query) use ($authStudent) {
+                $query->where('student_id', $authStudent->id);
+            })
             ->orderBy('semester')
             ->get();
+
         return view('courses.index', ['courses' => $courses]);
     }
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
 use App\Mail\EnteringMail;
+use App\Models\Course;
+use App\Models\CourseStudent;
 use App\Models\Faculty;
 use App\Models\Program;
 use App\Models\Student;
@@ -42,4 +44,17 @@ class StudentController extends Controller
            return true;
         return false;
     }
+
+    public function getStudentCoursePage(Course $course, Student $student){
+        $courseStudentRelation = CourseStudent::query()->where('course_id', $course->id)
+            ->where('student_id', $student->id)->first();
+
+        return view('students.course-student', [
+            'course' => $course,
+            'student' => $student,
+            'documents' => $courseStudentRelation?->documents,
+            'exams' => $courseStudentRelation?->exams
+        ]);
+    }
+
 }

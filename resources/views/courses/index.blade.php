@@ -28,17 +28,39 @@
 {{--        </div>--}}
 {{--    </div>--}}
     <div class="container mt-5">
+
+                <form action="{{route('export-courses')}}">
+                    <div class="row">
+                        <div class="col-4">
+                            <select class="form-select" name="mark" aria-label="Choose filter">
+                                <option selected value="">ALL</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="btn btn-success">Export</button>
+                        </div>
+                    </div>
+                </form>
+
         <table class="table">
             <thead>
             <th>Name</th>
             <th>ECTS</th>
             <th>Semester</th>
             <th>Total points</th>
+            <th>Mark</th>
             <th>Actions</th>
             </thead>
             <tbody>
             @foreach($courses as $courses)
-                <tr>
+                @php($totalPoints = $courses->courseStudents->first()?->totalPoints ?? number_format(0, 2))
+                <tr class="@if($totalPoints >=50)table-success @else table-danger @endif">
                     <td>
                         {{$courses->name}}
                     </td>
@@ -49,7 +71,22 @@
                         {{$courses->semester}}
                     </td>
                     <td>
-                        {{$courses->courseStudents->first()?->totalPoints ?? number_format(0, 2)}}
+                        {{$totalPoints}}
+                    </td>
+                    <td>
+                        @if($totalPoints >= 90)
+                            A
+                        @elseif($totalPoints >= 80)
+                            B
+                        @elseif($totalPoints >= 70)
+                            C
+                        @elseif($totalPoints >= 60)
+                            D
+                        @elseif($totalPoints >= 50)
+                            E
+                        @else
+                            F
+                        @endif
                     </td>
                     <td>
 {{--                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">--}}

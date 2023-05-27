@@ -8,13 +8,36 @@ use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use App\Models\CourseStudent;
 use App\Models\Program;
+use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CourseController extends Controller
 {
 
-    private function getCoursesByStudent($mark = null){
+    public function getCourseStudentStatistics()
+    {
+        /*
+         *
+        select course_student_id, courses.name, courses.id, students.id, sum(points) from students
+        join course_student on students.id = course_student.student_id
+        join courses on courses.id = course_student.course_id
+        join exams  on course_student.id = exams.course_student_id
+        group by course_student_id, courses.name, student_id;
+        */
+        $result = DB::table('students')->where('user_id', auth()->user()->id)
+            ->join('course_student', 'students.id', '=', 'course_student.student_id')
+            ->join('courses', 'courses.id', '=', 'course_student.course_id')
+            ->join('exams', 'course_student.id', '=', 'exams.course_student_id')
+            ->groupBy('course_student_id', 'courses.name', 'student_id')
+            ->select('course_student_id', 'courses.name', 'student_id', DB::raw('sum(points) as total_points'))
+            ->get();
+        return $result;
+    }
+
+    private function getCoursesByStudent($mark = null)
+    {
         $authStudent = auth()->user()->student;
         $courses = $authStudent->program->courses()
             ->with('courseStudents', function ($query) use ($authStudent) {
@@ -23,7 +46,7 @@ class CourseController extends Controller
             ->orderBy('semester')
             ->get();
 
-        if ($mark){
+        if ($mark) {
             $courses = $courses->filter(function ($course) use ($mark) {
                 $totalPoints = $course->courseStudents->first()?->total_points;
                 if ($mark == 'A')
@@ -54,7 +77,8 @@ class CourseController extends Controller
         return view('courses.index', ['courses' => $courses]);
     }
 
-    public function export(Request $request) {
+    public function export(Request $request)
+    {
         $courses = $this->getCoursesByStudent($request['mark']);
 
         return Excel::download(new CourseExport($courses), 'courses-export.xlsx');

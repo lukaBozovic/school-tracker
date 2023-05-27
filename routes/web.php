@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::post('documents', [DocumentController::class, 'storeStudentDocument'])->name('student-documents.store');
     Route::post('exams', [ExamController::class, 'store'])->name('exams.store');
     Route::get('courses-export', [CourseController::class, 'export'])->name('export-courses');
+    Route::get('test', [CourseController::class, 'getCourseStudentStatistics']);
 
     Route::middleware('student-data')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
